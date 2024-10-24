@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
-@FeignClient(name = "integrantesClient", url = "http://localhost:8080/api")
+@FeignClient(name = "integrantesClient", url = "https://proyecto-micro-backend.azurewebsites.net/api")
 public interface IntegrantesClient {
 
     @PostMapping("/autenticar")
