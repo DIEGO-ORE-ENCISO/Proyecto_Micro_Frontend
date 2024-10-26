@@ -20,6 +20,10 @@
 <body>
 <div class="login-container">
     <h2 class="text-center">Grupo 01 - Autenticación</h2>
+
+    <!-- Alerta de error -->
+    <div th:if="${error}" class="alert alert-danger text-center" role="alert" th:text="${error}"></div>
+
     <form action="#" th:action="@{/login}" method="post">
         <div class="mb-3">
             <label for="codigo" class="form-label">Código alumno</label>
@@ -32,7 +36,6 @@
         <div class="d-grid">
             <button type="submit" class="btn btn-primary">Ingresar</button>
         </div>
-        <p th:if="${error}" class="text-danger mt-2" th:text="${error}"></p>
     </form>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-oqVuAfXRKap7fdgcCY5CNz4YhZqjc7fzR4RODg5niU07ctCw4e+T1ywxG8+n5D7m" crossorigin="anonymous"></script>

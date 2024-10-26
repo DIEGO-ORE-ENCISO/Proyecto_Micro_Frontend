@@ -3,6 +3,7 @@ package com.proyecto.proyecto_final_frontend.controller;
 import com.proyecto.proyecto_final_frontend.client.IntegrantesClient;
 import com.proyecto.proyecto_final_frontend.model.Integrante;
 import com.proyecto.proyecto_final_frontend.model.Usuario;
+import feign.FeignException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,12 +26,17 @@ public class LoginController {
 
     @PostMapping("/login")
     public String authenticate(@ModelAttribute Usuario usuario, Model model) {
-        String respuesta = integrantesClient.autenticar(usuario);
-        if ("Autenticación exitosa".equals(respuesta)) {
-            return "redirect:/detalle"; // Redirige a la vista de detalle
-        } else {
-            model.addAttribute("error", "Problemas en la autenticación");
-            return "login"; // Regresa a la vista de inicio de sesión
+        try {
+            String respuesta = integrantesClient.autenticar(usuario);
+            if ("Autenticación exitosa".equals(respuesta)) {
+                return "redirect:/detalle";
+            } else {
+                model.addAttribute("error", "Problemas en la autenticación");
+                return "login";
+            }
+        } catch (FeignException.Unauthorized e) {
+            model.addAttribute("error", "Credenciales incorrectas");
+            return "login";
         }
     }
 
